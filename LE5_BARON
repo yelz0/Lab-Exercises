@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main() {
+    double number;
+    double total_sum = 0.0;
+    int count = 0;
+    
+    printf("Enter positive numbers to add to the sum.\n");
+    printf("Enter zero or a negative number to stop.\n\n");
+    
+
+    while (1) {
+        printf("Enter a number: ");
+        scanf("%lf", &number);
+        
+     
+        if (number > 0) {
+            total_sum += number;
+            count++;
+
+        }
+        else {
+            // Stop the loop if number is zero or negative
+            break;
+        }
+    }
+    
+    // Display the results
+ 
+    printf("Total sum: %.f\n", total_sum);
+    
+    return 0;
+}
