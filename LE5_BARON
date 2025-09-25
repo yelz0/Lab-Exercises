@@ -8,12 +8,12 @@ int main() {
     printf("Enter positive numbers to add to the sum.\n");
     printf("Enter zero or a negative number to stop.\n\n");
     
-
+    // Loop to continuously ask for input
     while (1) {
         printf("Enter a number: ");
         scanf("%lf", &number);
         
-     
+        // Conditional statement to check if number is positive
         if (number > 0) {
             total_sum += number;
             count++;
@@ -26,7 +26,6 @@ int main() {
     }
     
     // Display the results
- 
     printf("Total sum: %.f\n", total_sum);
     
     return 0;
