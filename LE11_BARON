@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    FILE *file;
+    char name[50], section[20];
+
+    printf("Complete Name: ");
+    gets(name);  
+    printf("Section: ");
+    gets(section);
+
+    file = fopen("students.txt", "w");
+    fprintf(file, "Complete Name: %s\nSection: %s\n", name, section);
+    fclose(file);
+
+    printf("Information successfully saved to students.txt\n\n");
+
+    file = fopen("students.txt", "r");
+    char ch;
+    while ((ch = fgetc(file)) != EOF)
+        putchar(ch);
+    fclose(file);
+
+    return 0;
+}
