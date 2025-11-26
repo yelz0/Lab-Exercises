@@ -11,7 +11,7 @@ void write_student_records() {
     
     char filename[] = "student_records.txt";
     
-    file = fopen(filename, "w");
+    file = fopen("student_records.txt", "w");
 
     if (file == NULL) {
         printf("Error: Could not open the file %s for writing.\n", filename);
