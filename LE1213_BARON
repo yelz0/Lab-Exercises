@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void write_student_records() {
+    FILE *file;
+    int num_students, i, age;
+    
+    char name[50];
+    char course[50];
+    
+    char filename[] = "student_records.txt";
+    
+    file = fopen(filename, "w");
+
+    if (file == NULL) {
+        printf("Error: Could not open the file %s for writing.\n", filename);
+        return;
+    }
+
+    printf("  WRITING STUDENT DATABASE\n");
+    printf("==================================\n");
+    
+    printf("How many students do you want to record? ");
+    if (scanf("%d", &num_students) != 1 || num_students <= 0) {
+        printf("Invalid input. Closing file.\n");
+        fclose(file);
+        return;
+    }
+    while (getchar() != '\n');
+    
+    for (i = 1; i <= num_students; i++) {
+        printf("\nStudent %d\n", i);
+
+        printf("Enter Name: ");
+        fgets(name, 50, stdin);
+        
+        printf("Enter Age: ");
+        scanf("%d", &age);
+        
+        while (getchar() != '\n'); 
+
+        printf("Enter Course: ");
+        fgets(course, 50, stdin);
+        
+        fprintf(file, "Student %d\n", i);
+        fprintf(file, "Name: %s", name);
+        fprintf(file, "Age: %d\n", age);
+        fprintf(file, "Course: %s", course); 
+    }
+
+    fclose(file);
+    printf("\nStudent database successfully saved to file: %s\n", filename);
+}
+
+void read_student_records() {
+    FILE *file;
+    char buffer[256];
+    
+    char filename[] = "student_records.txt";
+    
+    printf("\n\nREADING STUDENT DATABASE\n");
+
+    file = fopen(filename, "r");
+
+    if (file == NULL) {
+        printf("Error: Could not open the file %s for reading.\n", filename);
+        return;
+    }
+
+    printf("\nContents of %s:\n", filename);
+    printf("----------------------------------\n");
+    
+    while (fgets(buffer, 256, file) != NULL) {
+        printf("%s", buffer);
+    }
+    
+    printf("----------------------------------\n");
+
+
+    fclose(file);
+}
+
+int main() {
+    write_student_records();
+    
+    read_student_records();
+
+    return 0;
+}
