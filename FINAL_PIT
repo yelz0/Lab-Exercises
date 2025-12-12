@@ -1,0 +1,153 @@
+#include <stdio.h>
+#include <string.h>
+
+char userName[50];
+char fullName[50];
+char phoneNum[20];
+char homeAddress[100];
+float totalPrice = 0.0;
+
+void loginPage();
+void customerInfo();
+void showMenu();
+void takeOrder();
+
+int main() {
+    FILE *fp;
+
+    fp = fopen("costumer_records.txt", "a+");
+
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    printf("=============================================\n");
+    printf("      WELCOME TO KYLE'S ONLINE DELIVERY      \n");
+    printf("=============================================\n\n");
+
+    loginPage();
+    customerInfo();
+    showMenu();
+    takeOrder();
+
+    printf("\n=============================================\n");
+    printf("      THANK YOU FOR ORDERING, %s!            \n", fullName);
+    printf("    Your food is being prepared. 🍱🍔🍟      \n");
+    printf("=============================================\n");
+
+
+    fprintf(fp, "Customer: %s | Phone: %s | Address: %s | Total: P%.2f\n", 
+            fullName, phoneNum, homeAddress, totalPrice);
+    
+    fclose(fp);
+
+    return 0;
+}
+
+void loginPage() {
+    printf("LOGIN TO CONTINUE\n");
+    printf("---------------------------------------------\n");
+
+    printf("Enter your username: ");
+    fgets(userName, sizeof(userName), stdin);
+    userName[strcspn(userName, "\n")] = '\0'; // remove newline
+
+    if (strlen(userName) == 0) {
+        strcpy(userName, "Guest");
+    }
+
+    printf("\nHi %s! Welcome back to our delivery app. 😊\n\n", userName);
+}
+
+// CUSTOMER INFO
+void customerInfo() {
+    printf("Please provide your delivery details below:\n");
+    printf("---------------------------------------------\n");
+
+    printf("Full Name: ");
+    fgets(fullName, sizeof(fullName), stdin);
+    fullName[strcspn(fullName, "\n")] = '\0';
+
+    printf("Phone Number: ");
+    fgets(phoneNum, sizeof(phoneNum), stdin);
+    phoneNum[strcspn(phoneNum, "\n")] = '\0';
+
+    printf("Complete Address: ");
+    fgets(homeAddress, sizeof(homeAddress), stdin);
+    homeAddress[strcspn(homeAddress, "\n")] = '\0';
+
+    printf("\nThank you, %s! Your info has been recorded successfully. ✅\n\n", fullName);
+}
+
+// MENU SECTION
+void showMenu() {
+    printf("--------------- FOOD MENU ----------------\n");
+    printf("1. Chicken Meal ........ P120.00\n");
+    printf("2. Spaghetti ........... P85.00\n");
+    printf("3. Burger .............. P100.00\n");
+    printf("4. Milk Tea ............ P90.00\n");
+    printf("5. Exit / Checkout\n");
+    printf("------------------------------------------\n");
+}
+
+// ORDER SECTION
+void takeOrder() {
+    int choice, qty;
+    totalPrice = 0.0;
+
+    while (1) {
+        printf("\nEnter your choice (1-5): ");
+        if (scanf("%d", &choice) != 1) {
+            printf("Invalid input! Please enter a number.\n");
+            while(getchar() != '\n'); 
+            continue;
+        }
+
+        if (choice == 5) {
+            break;
+        }
+
+        switch (choice) {
+            case 1:
+                printf("Enter quantity for Chicken Meal: ");
+                scanf("%d", &qty);
+                totalPrice += 120 * qty;
+                printf("%d Chicken Meal(s) added to your order.\n", qty);
+                break;
+
+            case 2:
+                printf("Enter quantity for Spaghetti: ");
+                scanf("%d", &qty);
+                totalPrice += 85 * qty;
+                printf("%d Spaghetti added to your order.\n", qty);
+                break;
+
+            case 3:
+                printf("Enter quantity for Burger: ");
+                scanf("%d", &qty);
+                totalPrice += 100 * qty;
+                printf("%d Burger(s) added to your order.\n", qty);
+                break;
+
+            case 4:
+                printf("Enter quantity for Milk Tea: ");
+                scanf("%d", &qty);
+                totalPrice += 90 * qty;
+                printf("%d Milk Tea(s) added to your order.\n", qty);
+                break;
+
+            default:
+                printf("Invalid choice. Please choose between 1-5.\n");
+                break;
+        }
+    }
+
+    printf("\n=============== ORDER SUMMARY ===============\n");
+    printf("Customer Name : %s\n", fullName);
+    printf("Phone Number  : %s\n", phoneNum);
+    printf("Address       : %s\n", homeAddress);
+    printf("---------------------------------------------\n");
+    printf("Total Amount  : P%.2f\n", totalPrice);
+    printf("=============================================\n");
+}
